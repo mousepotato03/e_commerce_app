@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/theme/constant/app_icons.dart';
 import '../../routes/route_path.dart';
 
 class SplashPage extends StatefulWidget {
@@ -16,16 +17,15 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
-    //TODO: SPLASH 수정 할 것
     super.initState();
-    Timer(Duration(seconds: 2),()=> context.go(RoutePath.home));
+    Timer(Duration(seconds: 2),()=> context.go(RoutePath.main));
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF5F0080),
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: Center(
-        child: SvgPicture.asset("assets/svg/main_logo.svg"),
+        child: SvgPicture.asset(AppIcons.mainLogo),
       ),
     );
   }
