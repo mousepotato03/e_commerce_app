@@ -7,8 +7,8 @@ part 'menu.dto.g.dart';
 @freezed
 class MenuDto with _$MenuDto {
   const factory MenuDto({
-    @Default("") String title,
-    @Default(-1) int tabId,
+    @Default("") String? title,
+    @Default(-1) int? tabId,
   }) = _MenuDto;
 
 
