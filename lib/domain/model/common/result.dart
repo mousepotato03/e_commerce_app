@@ -8,5 +8,5 @@ part 'result.freezed.dart';
 class Result<T> with _$Result {
   const factory Result.Success(T data) = Success;
 
-  const factory Result.failure(ErrorResponse error) = Error;
+  const factory Result.Failure(ErrorResponse error) = Error;
 }
