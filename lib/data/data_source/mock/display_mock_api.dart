@@ -8,16 +8,33 @@ import 'display,mock.data.dart';
 class DisplayMockApi implements DisplayApi {
   @override
   Future<ResponseWrapper<List<MenuDto>>> getMenusByMallType(String mallType) {
-    return Future(() => ResponseWrapper(
-          status: "SUCCESS",
-          code: "0000",
-          message: '',
-          data: menuParser(
-            mallType == 'market'
-                ? DisplayMockData.menusByMarket
-                : DisplayMockData.menusByBeauty,
-          ),
-        ));
+
+    /*error_test*/
+
+    // return Future.delayed(
+    //   const Duration(milliseconds: 400),
+    //   () => ResponseWrapper(
+    //     status: 'fail',
+    //     code: 'GNB-0000',
+    //     message: '서비스 에러가 발생했습니다.\n 잠시 후에 다시 시도해주세요.',
+    //   ),
+    // );
+
+    /*success_test*/
+
+    return Future.delayed(
+      const Duration(milliseconds: 400),
+          () => ResponseWrapper(
+        status: 'SUCCESS',
+        code: '0000',
+        message: '',
+        data: menuParser(
+          mallType == 'market'
+              ? DisplayMockData.menusByMarket
+              : DisplayMockData.menusByBeauty,
+        ),
+      ),
+    );
   }
 
   // parsers

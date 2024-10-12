@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../../core/theme/constant/app_icons.dart';
-
 class SvgIconButton extends StatelessWidget {
   final double padding;
   final String icon;

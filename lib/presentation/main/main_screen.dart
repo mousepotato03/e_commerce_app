@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../core/theme/constant/app_icons.dart';
 import '../pages/category/category_page.dart';
 import '../pages/home/home_page.dart';
 import '../pages/search/search_page.dart';
