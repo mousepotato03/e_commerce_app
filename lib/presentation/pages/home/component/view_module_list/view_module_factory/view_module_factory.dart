@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../../../core/extensions.dart';
 import '../../../../../../domain/model/display/display.model.dart';
+import '../banner.view_module.dart';
+import '../carousel.view_module.dart';
 import '../view_module_A.dart';
 import '../view_module_B.dart';
 import '../view_module_C.dart';
@@ -16,6 +19,8 @@ enum Modules {
   viewModuleC,
   viewModuleD,
   viewModuleE,
+  carouselViewModule,
+  bannerViewModule,
 }
 
 class ViewModuleFactory{
@@ -24,7 +29,7 @@ class ViewModuleFactory{
     for(final module in Modules.values){
       final String name = module.name.toSnakeCase();
       if(name.contains(type)){
-        return module.toWidget() as Widget;
+        return module.toWidget(viewModule) as Widget;
       }
     }
     return const ViewModuleNONE();
@@ -32,7 +37,7 @@ class ViewModuleFactory{
 }
 
 extension ModulesX on Modules{
-  ViewModuleWidget toWidget(){
+  ViewModuleWidget toWidget(ViewModule info){
     switch(this){
       case Modules.viewModuleA:
         return const ViewModuleA();
@@ -44,6 +49,10 @@ extension ModulesX on Modules{
         return const ViewModuleD();
       case Modules.viewModuleE:
         return const ViewModuleE();
+      case Modules.carouselViewModule:
+        return CarouselViewModule(info: info);
+      case Modules.bannerViewModule:
+        return BannerViewModule(info: info);
     }
   }
 }

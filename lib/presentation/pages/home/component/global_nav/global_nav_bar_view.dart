@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/constant.dart';
+import '../../../../../dependency_injection.dart';
 import '../../../../../domain/model/display/menu/menu.model.dart';
 import '../../../../../domain/usecase/display/display.usecase.dart';
-import '../../../../../service_locator.dart';
 import '../../bloc/view_modules_bloc/view_module_bloc.dart';
 import '../view_module_list/view_module_list.dart';
 
@@ -19,10 +19,11 @@ class GlobalNavBarView extends StatelessWidget {
     return Expanded(
       child: TabBarView(
         children: List.generate(menus.length, (index) {
+          final tabId = menus[index].tabId;
           return BlocProvider(
-            create: (_) => locator<ViewModuleBloc>()
-              ..add(ViewModuleInitialized(tabId: menus[index].tabId)),
-            child: const ViewModuleList(),
+            create: (_) => getIt<ViewModuleBloc>()
+              ..add(ViewModuleInitialized(tabId: tabId)),
+            child: ViewModuleList(tabId: tabId),
           );
         }),
       ),

@@ -6,7 +6,9 @@ import '../../../../../core/extensions.dart';
 import '../../bloc/view_modules_bloc/view_module_bloc.dart';
 
 class ViewModuleList extends StatefulWidget {
-  const ViewModuleList({super.key});
+  final int tabId;
+
+  const ViewModuleList({super.key, required this.tabId});
 
   @override
   State<ViewModuleList> createState() => _ViewModuleListState();
@@ -44,20 +46,27 @@ class _ViewModuleListState extends State<ViewModuleList> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ViewModuleBloc, ViewModuleState>(
-      builder: (_, state) {
-        return (state.status.isInitial || state.viewModules.isEmpty)
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : ListView(
-                controller: scrollController,
-                children: [
-                  ...state.viewModules,
-                  if (state.status.isLoading) LoadingWidget(),
-                ],
-              );
-      },
+    return RefreshIndicator(
+      onRefresh: () async =>
+          context.read<ViewModuleBloc>().add(ViewModuleInitialized(
+                tabId: widget.tabId,
+                isRefresh: true,
+              )),
+      child: BlocBuilder<ViewModuleBloc, ViewModuleState>(
+        builder: (_, state) {
+          return (state.status.isInitial || state.viewModules.isEmpty)
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ListView(
+                  controller: scrollController,
+                  children: [
+                    ...state.viewModules,
+                    if (state.status.isLoading) LoadingWidget(),
+                  ],
+                );
+        },
+      ),
     );
   }
 }
