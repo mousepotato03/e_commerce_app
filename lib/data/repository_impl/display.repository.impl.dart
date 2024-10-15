@@ -8,8 +8,6 @@ import '../dto/common/response_wrapper/response_wrapper.dart';
 import '../mapper/common.mapper.dart';
 import '../mapper/display.mapper.dart';
 
-
-
 class DisplayRepositoryImpl implements DisplayRepository {
   final DisplayApi _displayApi;
 
@@ -26,8 +24,11 @@ class DisplayRepositoryImpl implements DisplayRepository {
   }
 
   @override
-  Future<ResponseWrapper<List<ViewModule>>> getViewModuleByTabId({required int tabId}) async{
-    final response = await _displayApi.getViewModulesByTabId(tabId);
+  Future<ResponseWrapper<List<ViewModule>>> getViewModuleByTabId({
+    required int tabId,
+    required int page,
+  }) async {
+    final response = await _displayApi.getViewModulesByTabId(tabId,page);
 
     return response.toModel<List<ViewModule>>(
       response.data?.map((dto) => dto.toModel()).toList() ?? [],

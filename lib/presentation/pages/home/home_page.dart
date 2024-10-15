@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
       builder: (context, state) {
         return BlocProvider(
           create: (_) =>
-              MenuBloc(locator<DisplayUsecase>())..add(MenuInitialized(state)),
+              locator<MenuBloc>()..add(MenuInitialized(state)),
           child: const HomePageView(),
         );
       },

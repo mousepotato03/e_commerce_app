@@ -20,7 +20,7 @@ class GlobalNavBarView extends StatelessWidget {
       child: TabBarView(
         children: List.generate(menus.length, (index) {
           return BlocProvider(
-            create: (_) => ViewModuleBloc(locator<DisplayUsecase>())
+            create: (_) => locator<ViewModuleBloc>()
               ..add(ViewModuleInitialized(tabId: menus[index].tabId)),
             child: const ViewModuleList(),
           );
@@ -29,5 +29,3 @@ class GlobalNavBarView extends StatelessWidget {
     );
   }
 }
-
-
