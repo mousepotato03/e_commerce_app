@@ -55,6 +55,7 @@ class ProductCardWidget extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
         ),
+        const SizedBox(height: 1),
         Row(
           children: [
             Text(
@@ -62,7 +63,7 @@ class ProductCardWidget extends StatelessWidget {
               style: priceStyle?.discountRateCopyWith(),
             ),
             SizedBox(
-              width: 4,
+              height: 4,
             ),
             Text(
               productInfo.price.toWon(),
@@ -70,15 +71,10 @@ class ProductCardWidget extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(
-          height: 2,
-        ),
+        SizedBox(height: 2),
         Text(
           productInfo.originalPrice.toWon(),
           style: originalPriceStyle?.originalPriceCopyWith(),
-        ),
-        SizedBox(
-          height: 8,
         ),
         if (needShowReviewCount)
           Padding(
@@ -94,9 +90,7 @@ class ProductCardWidget extends StatelessWidget {
                     BlendMode.srcIn,
                   ),
                 ),
-                SizedBox(
-                  width: 4,
-                ),
+                SizedBox(width: 4),
                 Text(
                   "후기 ${productInfo.reviewCount.toReview()}",
                   style: reviewStyle?.reviewCountCopyWith(),
