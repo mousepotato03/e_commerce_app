@@ -14,7 +14,9 @@ class ViewModule with _$ViewModule {
     required String title,
     required String subtitle,
     required String imageUrl,
+    required int time,
     required List<ProductInfo> products,
+    required List<String> tabs,
   }) = _ViewModule;
 
   factory ViewModule.fromJson(Map<String, dynamic> json) =>
