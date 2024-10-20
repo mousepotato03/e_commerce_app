@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'product_info.model.freezed.dart';
-
 part 'product_info.model.g.dart';
 
 @freezed

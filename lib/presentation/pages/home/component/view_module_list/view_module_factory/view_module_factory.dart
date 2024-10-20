@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:injectable/injectable.dart';
 
 import '../../../../../../core/extensions.dart';
 import '../../../../../../domain/model/display/display.model.dart';

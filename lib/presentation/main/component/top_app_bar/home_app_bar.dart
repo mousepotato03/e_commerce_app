@@ -65,16 +65,21 @@ class HomeAppBar extends StatelessWidget {
                 SvgIconButton(
                   icon: AppIcons.location,
                   color: state.theme.iconColor,
+                  onPressed: null,
                 ),
                 SvgIconButton(
                   icon: AppIcons.cart,
                   color: state.theme.iconColor,
+                  onPressed: null,
+
                 ),
               ],
               leading: SvgIconButton(
                 icon: AppIcons.mainLogo,
                 padding: 8,
                 color: state.theme.logoColor,
+                onPressed: null,
+
               )),
         );
       },

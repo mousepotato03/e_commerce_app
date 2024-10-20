@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../core/constant.dart';
 import '../../../../../core/extensions.dart';
 import '../../bloc/view_modules_bloc/view_module_bloc.dart';
 import '../footer/footer.dart';

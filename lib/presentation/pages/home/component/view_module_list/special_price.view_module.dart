@@ -90,7 +90,7 @@ class _SpecialPriceProduct extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            AddCartButton(),
+            AddCartButton(productInfo),
           ],
         ),
         SizedBox(
@@ -150,6 +150,5 @@ class _SpecialPriceProduct extends StatelessWidget {
         )
       ],
     );
-    ;
   }
 }

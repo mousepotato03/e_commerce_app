@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,11 +15,9 @@ import '../../../../../domain/usecase/display/display.usecase.dart';
 import '../../../../../domain/usecase/display/view_module/get_view_modules.usecase.dart';
 import '../../component/view_module_list/view_module_factory/view_module_factory.dart';
 
-part 'view_module_event.dart';
-
-part 'view_module_state.dart';
-
 part 'view_module_bloc.freezed.dart';
+part 'view_module_event.dart';
+part 'view_module_state.dart';
 
 EventTransformer<E> _throttleDroppable<E>(Duration duration) {
   return (events, mapper) {

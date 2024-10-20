@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../../core/extensions.dart';
-import '../../../../../../core/theme/constant/app_colors.dart';
 import '../../../../../../core/theme/constant/app_icons.dart';
 import '../../../../../../core/theme/custom/custom_theme.dart';
 import '../../../../../../domain/model/display/product_info/product_info.model.dart';
@@ -43,7 +42,7 @@ class ProductCardWidget extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            AddCartButton(),
+            AddCartButton(productInfo),
           ],
         ),
         SizedBox(
