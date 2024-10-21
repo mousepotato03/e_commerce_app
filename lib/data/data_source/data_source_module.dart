@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 
+import 'local_storage/display.dao.dart';
 import 'mock/display_mock_api.dart';
 import 'remote/display.api.dart';
 
@@ -8,4 +9,7 @@ abstract class DataSourceModule{
 
   @singleton
   DisplayApi get displayApi => DisplayMockApi();
+
+  @singleton
+  DisplayDao get diplayDao => DisplayDao();
 }
