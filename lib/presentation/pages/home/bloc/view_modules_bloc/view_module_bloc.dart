@@ -16,7 +16,9 @@ import '../../../../../domain/usecase/display/view_module/get_view_modules.useca
 import '../../component/view_module_list/view_module_factory/view_module_factory.dart';
 
 part 'view_module_bloc.freezed.dart';
+
 part 'view_module_event.dart';
+
 part 'view_module_state.dart';
 
 EventTransformer<E> _throttleDroppable<E>(Duration duration) {
@@ -82,7 +84,7 @@ class ViewModuleBloc extends Bloc<ViewModuleEvent, ViewModuleState> {
     required int tabId,
     int page = 1,
   }) async {
-    return await _displayUsecase.excute(
+    return await _displayUsecase.execute(
       usecase: GetViewModulesUsecase(tabId: tabId, page: page),
     );
   }

@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 import '../../dto/common/response_wrapper/response_wrapper.dart';
 import '../../entity/cart/cart.entity.dart';
 
-const String _cartDb = 'CART_DB';
+const String _cartDb = 'Cart_DB';
 
 class DisplayDao {
   /// 장바구니 리스트 불러오기
@@ -22,6 +22,7 @@ class DisplayDao {
   Future<ResponseWrapper<List<CartEntity>>> insertCart(CartEntity cart) async {
     final localStorage = await Hive.openBox<CartEntity>(_cartDb);
     final productId = cart.product.productId;
+
     // 이미 장바구니에 존재하는 상품
     if (localStorage.get(productId) != null) {
       final status = '이미 존재하는 상품 ::: ${cart.product.title}';
@@ -35,6 +36,7 @@ class DisplayDao {
         data: localStorage.values.toList(),
       );
     }
+    print("productId: ${productId},cart: ${cart}");
     await localStorage.put(productId, cart);
 
     return ResponseWrapper(
@@ -47,8 +49,8 @@ class DisplayDao {
 
   // 장바구니에 담긴 상품 삭제 by productId
   Future<ResponseWrapper<List<CartEntity>>> deleteCart(
-      List<String> productIds,
-      ) async {
+    List<String> productIds,
+  ) async {
     final localStorage = await Hive.openBox<CartEntity>(_cartDb);
     await localStorage.deleteAll(productIds);
 
@@ -59,7 +61,6 @@ class DisplayDao {
       data: localStorage.values.toList(),
     );
   }
-
 
   // 장바구니 전체 삭제
   Future<ResponseWrapper<List<CartEntity>>> clearCarts() async {
@@ -74,12 +75,11 @@ class DisplayDao {
     );
   }
 
-
   ///장바구니 수량 변경
   Future<ResponseWrapper<List<CartEntity>>> changeQtyCart(
-      String productId,
-      int quantity,
-      ) async {
+    String productId,
+    int quantity,
+  ) async {
     final localStorage = await Hive.openBox<CartEntity>(_cartDb);
     final curCart = localStorage.get(productId);
     if (curCart == null) {

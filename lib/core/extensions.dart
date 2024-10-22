@@ -12,7 +12,7 @@ extension StatusX on Status {
 
   bool get isSuccess => this == Status.success;
 
-  bool get inError => this == Status.error;
+  bool get isError => this == Status.error;
 }
 
 extension StringEx on String {

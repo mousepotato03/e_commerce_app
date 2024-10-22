@@ -11,5 +11,5 @@ abstract class DataSourceModule{
   DisplayApi get displayApi => DisplayMockApi();
 
   @singleton
-  DisplayDao get diplayDao => DisplayDao();
+  DisplayDao get displayDao => DisplayDao();
 }
