@@ -13,7 +13,9 @@ import '../../../../../domain/usecase/display/display.usecase.dart';
 import '../../../../../domain/usecase/display/menu/get_menus_usecase.dart';
 
 part 'menu_bloc.freezed.dart';
+
 part 'menu_event.dart';
+
 part 'menu_state.dart';
 
 @injectable
@@ -31,7 +33,6 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
     final mallType = event.mallType;
 
     emit(state.copyWith(status: Status.loading));
-    await Future.delayed(Duration(seconds: 2));
     try {
       final response = await _fetch(mallType);
       response.when(

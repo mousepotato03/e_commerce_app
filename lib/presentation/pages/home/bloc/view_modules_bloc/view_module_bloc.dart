@@ -53,7 +53,6 @@ class ViewModuleBloc extends Bloc<ViewModuleEvent, ViewModuleState> {
       }
 
       emit(state.copyWith(status: Status.loading));
-      await Future.delayed(Duration(seconds: 1));
 
       final response = await _fetch(tabId: tabId);
       response.when(
@@ -98,7 +97,6 @@ class ViewModuleBloc extends Bloc<ViewModuleEvent, ViewModuleState> {
     final tabId = state.tabId;
 
     emit(state.copyWith(status: Status.loading));
-    await Future.delayed(Duration(seconds: 1));
 
     try {
       final response = await _fetch(tabId: tabId, page: nextPage);
