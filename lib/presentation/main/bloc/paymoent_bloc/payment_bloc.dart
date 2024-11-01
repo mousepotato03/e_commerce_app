@@ -24,7 +24,7 @@ enum PaymentStatus {
   error,
 }
 
-@Injectable()
+@injectable
 class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
   PaymentBloc() : super(PaymentState()) {
     on<PayMoney>(_onPayMoney);

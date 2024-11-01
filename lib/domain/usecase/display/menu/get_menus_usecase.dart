@@ -1,3 +1,5 @@
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+
 import '../../../../core/constant.dart';
 import '../../../../core/util/error/error_response.dart';
 import '../../../model/common/result.dart';
