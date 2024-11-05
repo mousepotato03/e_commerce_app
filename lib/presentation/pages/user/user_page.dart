@@ -79,6 +79,8 @@ class UserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = context.watch<UserBloc>().state.user;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 32),
@@ -86,8 +88,7 @@ class UserProfile extends StatelessWidget {
           children: [
             ClipOval(
               child: Image.network(
-                //TODO 유저 프로필 이미지
-                '',
+                user?.kakaoAccount?.profile?.profileImageUrl ?? "",
                 width: 110,
                 height: 110,
               ),
@@ -96,8 +97,7 @@ class UserProfile extends StatelessWidget {
               height: 24,
             ),
             Text(
-              //TODO 유저 이름
-              '무명의 사용자',
+              user?.kakaoAccount?.profile?.nickname ?? '무명의 사용자',
               style: Theme.of(context)
                   .textTheme
                   .titleLarge
@@ -110,10 +110,10 @@ class UserProfile extends StatelessWidget {
               height: 24,
             ),
             Container(
+              padding: EdgeInsets.symmetric(horizontal: 24),
               width: double.infinity,
               child: ElevatedButton(
-                //TODO 로그아웃 이벤트 호출
-                onPressed: null,
+                onPressed: ()=> context.read<UserBloc>().add(UserLogout()),
                 style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll<Color>(
                     Theme.of(context).primaryColor,

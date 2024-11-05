@@ -1,12 +1,13 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:e_commerce_app/data/data_source/remote/display/display.api.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../core/util/rest_client/rest_client.dart';
 import 'local_storage/display.dao.dart';
 import 'mock/display_mock_api.dart';
-import 'remote/display.api.dart';
+import 'remote/user/user.api.dart';
 
 @module
 abstract class DataSourceModule {
@@ -22,6 +23,9 @@ abstract class DataSourceModule {
     // return DisplayApi(_dio);
     return DisplayMockApi();
   }
+
+  @singleton
+  UserApi get userApi => UserApi(_dio);
 
   @singleton
   DisplayDao get displayDao => DisplayDao();

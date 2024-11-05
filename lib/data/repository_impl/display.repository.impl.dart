@@ -6,7 +6,7 @@ import '../../domain/model/display/menu/menu.model.dart';
 import '../../domain/model/display/view_module/view_module.model.dart';
 import '../../domain/repository/display.repository.dart';
 import '../data_source/local_storage/display.dao.dart';
-import '../data_source/remote/display.api.dart';
+import '../data_source/remote/display/display.api.dart';
 import '../dto/common/response_wrapper/response_wrapper.dart';
 import '../mapper/common.mapper.dart';
 import '../mapper/display.mapper.dart';

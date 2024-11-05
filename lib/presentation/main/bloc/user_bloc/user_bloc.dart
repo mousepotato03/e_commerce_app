@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -8,8 +7,10 @@ import '../../../../core/constant.dart';
 import '../../../../core/util/error/error_response.dart';
 import '../../../../core/util/exception/common_exception.dart';
 import '../../../../core/util/logger.dart';
+import '../../../../domain/model/common/result.dart';
 import '../../../../domain/usecase/user/login.usecase.dart';
 import '../../../../domain/usecase/user/login_with_token.usecase.dart';
+import '../../../../domain/usecase/user/logout_usecase.dart';
 import '../../../../domain/usecase/user/user.usecase.dart';
 
 part 'user_event.dart';
@@ -29,35 +30,89 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   Future<void> _onUserLogin(
-    UserLogin event,
-    Emitter<UserState> emit,
-  ) async {
+      UserLogin event,
+      Emitter<UserState> emit,
+      ) async {
     try {
       emit(state.copyWith(status: Status.loading));
 
-      final User? user = await _userUsecase.execute(usecase: LoginUsecase());
-      debugPrint("로그인 성공");
-      if (user == null) {
-        emit(state.copyWith(status: Status.initial));
-      } else {
-        emit(state.copyWith(status: Status.success, user: user));
-      }
-    } on ErrorResponse catch (e) {
-      emit(state.copyWith(status: Status.error, error: e));
-    } catch (e) {
-      CustomLogger.logger.e("${e.toString()}");
+      final response = await _userUsecase.execute<Result<User>>(
+        usecase: LoginUsecase(),
+      );
+
+      response.when(
+        success: (user) {
+          emit(state.copyWith(status: Status.success, user: user));
+        },
+        failure: (_) {
+          emit(state.copyWith(status: Status.initial));
+        },
+      );
+    } on ErrorResponse catch (error) {
       emit(state.copyWith(
-          status: Status.error, error: CommonException.setError(e)));
+        status: Status.error,
+        error: error,
+      ));
+    } catch (error) {
+      CustomLogger.logger.e(error);
+      emit(state.copyWith(
+        status: Status.error,
+        error: CommonException.setError(error),
+      ));
     }
   }
 
   Future<void> _onUserLoginWithToken(
-    UserLoginWithToken event,
-    Emitter<UserState> emit,
-  ) async {}
+      UserLoginWithToken event,
+      Emitter<UserState> emit,
+      ) async {
+    emit(state.copyWith(status: Status.loading));
+    try {
+      final response = await _userUsecase.execute<Result<User>>(
+        usecase: LoginWithTokenUsecase(),
+      );
+
+      response.when(
+        success: (user) {
+          emit(state.copyWith(status: Status.success, user: user));
+        },
+        failure: (_) {
+          emit(state.copyWith(status: Status.initial));
+        },
+      );
+    } on ErrorResponse catch (error) {
+      emit(state.copyWith(
+        status: Status.error,
+        error: error,
+      ));
+    } catch (error) {
+      CustomLogger.logger.e(error);
+      emit(state.copyWith(
+        status: Status.error,
+        error: CommonException.setError(error),
+      ));
+    }
+  }
 
   Future<void> _onUserLogout(
-    UserLogout event,
-    Emitter<UserState> emit,
-  ) async {}
+      UserLogout event,
+      Emitter<UserState> emit,
+      ) async {
+    emit(state.copyWith(status: Status.loading));
+    try {
+      await _userUsecase.execute(usecase: LogoutUsecase());
+      emit(state.copyWith(status: Status.initial, user: null));
+    } on ErrorResponse catch (error) {
+      emit(state.copyWith(
+        status: Status.error,
+        error: error,
+      ));
+    } catch (error) {
+      CustomLogger.logger.e(error);
+      emit(state.copyWith(
+        status: Status.error,
+        error: CommonException.setError(error),
+      ));
+    }
+  }
 }
