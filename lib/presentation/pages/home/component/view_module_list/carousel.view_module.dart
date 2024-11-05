@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/theme/constant/app_colors.dart';
+import '../../../../../core/util/component/common_image.dart';
 import '../../../../../domain/model/display/product_info/product_info.model.dart';
 import '../../../../../domain/model/display/view_module/view_module.model.dart';
 import 'view_module_factory/view_module_widget.dart';
@@ -56,11 +57,8 @@ class _CarouselViewModuleState extends State<CarouselViewModule> {
               });
             },
             itemBuilder: (_, index) {
-              String src = products[index % products.length].imageUrl;
-              return Image.network(
-                src,
-                fit: BoxFit.cover,
-              );
+              String src = sampleImages[index % products.length];
+              return CommonImage(src);
             },
           ),
           Align(
