@@ -8,6 +8,7 @@ import '../../domain/repository/display.repository.dart';
 import '../data_source/local_storage/display.dao.dart';
 import '../data_source/remote/display/display.api.dart';
 import '../dto/common/response_wrapper/response_wrapper.dart';
+import '../entity/view_module_list/view_module_list.entity.dart';
 import '../mapper/common.mapper.dart';
 import '../mapper/display.mapper.dart';
 
@@ -32,46 +33,77 @@ class DisplayRepositoryImpl implements DisplayRepository {
   Future<ResponseWrapper<List<ViewModule>>> getViewModuleByTabId({
     required int tabId,
     required int page,
+    required bool isRefresh,
   }) async {
-    final response = await _displayApi.getViewModulesByTabId(tabId,page);
+    final cacheKey = '$tabId';
+    if (isRefresh) {
+      await _displayDao.clearViewModules(cacheKey);
+    }
 
-    return response.toModel<List<ViewModule>>(
-      response.data?.map((dto) => dto.toModel()).toList() ?? [],
+    final cachedViewModules = await _displayDao.getViewModules(cacheKey, page);
+
+    if (cachedViewModules.isNotEmpty) {
+      return ResponseWrapper(status: 'SUCCESS', data: cachedViewModules);
+    }
+
+    final response = await _displayApi.getViewModulesByTabId(tabId, page);
+    final viewModules =
+        response.data?.map((dto) => dto.toModel()).toList() ?? [];
+
+    await _displayDao.insertViewModules(
+      cacheKey,
+      page,
+      ViewModuleListEntity(
+        viewModules: viewModules.map((e) => e.toEntity()).toList(),
+      ),
     );
+    return response.toModel<List<ViewModule>>(viewModules);
   }
 
   @override
-  Future<ResponseWrapper<List<Cart>>> getCartList() async{
+  Future<ResponseWrapper<List<Cart>>> getCartList() async {
     final response = await _displayDao.getCartList();
 
-    return response.toModel<List<Cart>>(response.data?.map((cartEntity)=> cartEntity.toModel()).toList() ?? []);
+    return response.toModel<List<Cart>>(
+        response.data?.map((cartEntity) => cartEntity.toModel()).toList() ??
+            []);
   }
+
   @override
-  Future<ResponseWrapper<List<Cart>>> addCartList({required Cart cart}) async{
+  Future<ResponseWrapper<List<Cart>>> addCartList({required Cart cart}) async {
     final response = await _displayDao.insertCart(cart.toEntity());
 
-    return response.toModel<List<Cart>>(response.data?.map((cartEntity)=> cartEntity.toModel()).toList() ?? []);
+    return response.toModel<List<Cart>>(
+        response.data?.map((cartEntity) => cartEntity.toModel()).toList() ??
+            []);
   }
+
   @override
-  Future<ResponseWrapper<List<Cart>>> deleteCartByPrdId(List<String> productIds) async{
+  Future<ResponseWrapper<List<Cart>>> deleteCartByPrdId(
+      List<String> productIds) async {
     final response = await _displayDao.deleteCart(productIds);
 
-    return response.toModel<List<Cart>>(response.data?.map((cartEntity)=> cartEntity.toModel()).toList() ?? []);
+    return response.toModel<List<Cart>>(
+        response.data?.map((cartEntity) => cartEntity.toModel()).toList() ??
+            []);
   }
+
   @override
-  Future<ResponseWrapper<List<Cart>>> clearCartList() async{
+  Future<ResponseWrapper<List<Cart>>> clearCartList() async {
     final response = await _displayDao.clearCarts();
 
-    return response.toModel<List<Cart>>(response.data?.map((cartEntity)=> cartEntity.toModel()).toList() ?? []);
+    return response.toModel<List<Cart>>(
+        response.data?.map((cartEntity) => cartEntity.toModel()).toList() ??
+            []);
   }
 
   @override
-  Future<ResponseWrapper<List<Cart>>> changeCartQuantityByPrdId({required String productId, required int qty}) async{
+  Future<ResponseWrapper<List<Cart>>> changeCartQuantityByPrdId(
+      {required String productId, required int qty}) async {
     final response = await _displayDao.changeQtyCart(productId, qty);
 
-    return response.toModel<List<Cart>>(response.data?.map((cartEntity)=> cartEntity.toModel()).toList() ?? []);
+    return response.toModel<List<Cart>>(
+        response.data?.map((cartEntity) => cartEntity.toModel()).toList() ??
+            []);
   }
-
-
-
 }
